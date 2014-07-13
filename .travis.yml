@@ -3,8 +3,7 @@ python:
 - '3.4'
 install: pip install -r requirements.txt
 script: python tests/tests.py
-env: user=AutoGitHubBot
 env:
   global:
-    secure: g02GITCeU17zcVWVreQYGa9WHHZmyG+n/aXCUKRlJRgXc3fR9gR6jusdNc1j5UK3YAAMbGmdPfWC90a7Y9IXhkF2/nCUujHv1JYxUkEkwtDGsoZo2JV6UlChTE3qYKeQL9MPzuZXIu7AHvHcSXU3jp0V/PjLS3E0Ff+dGGs2/zg=-
-
+  - secure: dRRRuW/xezBXHblUqQEvDz3rtZ6dbYIxUH1OH6jtq4tzN8FtfpQaGc02ID9qqd2qJTCYU5PKyFqxZb183w/Nl9Z2nEM5T85CQ4ltK6stmVuFCFVV6wvwOZgYl3zQKMiv9Q57o8s2FfMoWDG7NQWSt8PWuIT0ZqiBoEG/DHAux6k=
+  - secure: CsX9/12lVhIWzW1iQTOUOn//qwC6Zr4HpWkujyWeKuYnk4xevjmBbYR7Dr7mIqifLCHqDEwjWDbyFDnjd9kDMmWfizBU2htqO3KUq6JuujGqy2Vy0H+xiUvhbUsDK4fbcxNArmznecc8Le8Q9BS8czW62OP3z7KwbKL2b85NaJs=
