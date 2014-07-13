@@ -5,4 +5,5 @@ install: pip install -r requirements.txt
 script: python tests/tests.py
 env:
   global:
-    secure: g02GITCeU17zcVWVreQYGa9WHHZmyG+n/aXCUKRlJRgXc3fR9gR6jusdNc1j5UK3YAAMbGmdPfWC90a7Y9IXhkF2/nCUujHv1JYxUkEkwtDGsoZo2JV6UlChTE3qYKeQL9MPzuZXIu7AHvHcSXU3jp0V/PjLS3E0Ff+dGGs2/zg=
+    secure: g02GITCeU17zcVWVreQYGa9WHHZmyG+n/aXCUKRlJRgXc3fR9gR6jusdNc1j5UK3YAAMbGmdPfWC90a7Y9IXhkF2/nCUujHv1JYxUkEkwtDGsoZo2JV6UlChTE3qYKeQL9MPzuZXIu7AHvHcSXU3jp0V/PjLS3E0Ff+dGGs2/zg=-
+    user: AutoGitHubBot

@@ -85,6 +85,10 @@ And there you go! It will start watching your subreddits and replying when neede
 Running tests
 -------------
 
+You need to define the environment variables `user` and `password` for the Reddit logins. (Done this way to make it work with travis-ci). Try this:
+
+python -c 'import os; os.environ["password"]=yourpass; os.environ["user"]=youruser; os.sytem("python tests/test.py")'
+
 Just run `python tests/tests.py`. You need to create a file called `secrets.py` in `/tests` with your bot's `user` and `password` defined as variables.
 
 Installation
