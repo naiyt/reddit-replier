@@ -37,11 +37,13 @@ class Replier:
     def check_and_post(self, comments):
         for comment in comments:
             if comment.author.name.lower() not in self.blacklist:
-                if self.parser(comment):
+                result = self.parser(comment)
+                if result:
+                    args = [comment] if result == True else [comment].extend(result[1:])
                     if self.debug:
-                        return self.replier(comment)
+                        return self.replier(*args)
                     else:
-                        comment.reply(self.replier(comment))
+                        comment.reply(self.replier(*args))
 
     def _setup_blacklist(self):
         basepath = os.path.dirname(__file__)
