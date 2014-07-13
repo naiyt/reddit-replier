@@ -13,7 +13,7 @@ class TestReplier(unittest.TestCase):
 
     def test_that_parser_returns_true_correctly(self):
         reply = self.replier.start()
-        self.assertEqual('Replying to message ciw02wx by naiyt', reply)
+        self.assertEqual('Replying to message by naiyt', reply)
 
     def test_that_parser_returns_false_correctly(self):
         replier_2 = Replier(test_parser_2, test_replier, USER, PASS, 'redditreplier', debug=True)
@@ -45,7 +45,7 @@ def test_parser_3(message):
         return False
 
 def test_replier(message):
-    return "Replying to message {} by {}".format(message.id, message.author)
+    return "Replying to message by {}".format(message.author)
 
 if __name__ == "__main__" and __package__ is None:
     import sys, os
