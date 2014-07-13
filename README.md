@@ -1,6 +1,8 @@
 reddit-replier
 ==============
 
+[![Build Status](https://travis-ci.org/naiyt/reddit-replier.svg?branch=master)](https://travis-ci.org/naiyt/reddit-replier)
+
 A simple Python module that simplifies creating Reddit bots that reply to comments based on specific criteria. 
 
 The `Replier` class takes a `parser` function and a `replier` function. The `parser` function is passed a `praw` formatted Reddit message and should return `True` or `False`.
