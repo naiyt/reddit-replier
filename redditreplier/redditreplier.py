@@ -39,11 +39,17 @@ class Replier:
             if comment.author.name.lower() not in self.blacklist:
                 result = self.parser(comment)
                 if result:
-                    args = [comment] if result == True else [comment].extend(result[1:])
-                    if self.debug:
-                        return self.replier(*args)
-                    else:
-                        comment.reply(self.replier(*args))
+                    args = [comment]
+                    try:
+                        args.extend(result)
+                    except TypeError:
+                        pass
+                    reply = self.replier(*args)
+                    if reply:
+                        if self.debug:
+                            return reply
+                        else:
+                            comment.reply(reply)
 
     def _setup_blacklist(self):
         basepath = os.path.dirname(__file__)
