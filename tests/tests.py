@@ -2,8 +2,8 @@ import unittest
 import os
 
 TEST_THREAD = 'http://www.reddit.com/r/redditreplier/comments/2akb3w/autogithubbot_test_thread/'
-USER = os.environ['user']
-PASS = os.environ['password']
+# USER = os.environ['user']
+# PASS = os.environ['password']
 
 class TestReplier(unittest.TestCase):
 

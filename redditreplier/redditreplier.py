@@ -1,5 +1,7 @@
 import praw
 import os.path
+import traceback
+from time import sleep
 
 __version__ = '0.01'
 
@@ -24,38 +26,63 @@ class Replier:
         self.r = praw.Reddit(self.user_agent)
         self.r.login(self.user_name, self.user_pass)
         self.blacklist = self._setup_blacklist()
-        self.blacklist.append(self.user_name)
-
+        self.rest_time = 3
 
     def start(self):
-        if self.debug:
-            comments = self.r.get_subreddit(self.subreddits).get_comments(limit=50)
-        else:
-            comments = praw.helpers.comment_stream(self.r, self.subreddits, self.limit)
-        return self.check_and_post(comments)
+        comments = praw.helpers.comment_stream(self.r, self.subreddits, self.limit)
+        return self._main_loop(comments)
 
-    def check_and_post(self, comments):
+    def _main_loop(self, comments):
+        while True:
+            try:
+                self._search_comments(comments)
+            except Exception as e:
+                self._handle_exception(e)
+        
+    def _search_comments(self, comments):
         for comment in comments:
-            if comment.author.name.lower() not in self.blacklist:
-                result = self.parser(comment)
-                if result:
-                    args = [comment]
-                    try:
-                        args.extend(result)
-                    except TypeError:
-                        pass
-                    reply = self.replier(*args)
-                    if reply:
-                        if self.debug:
-                            return reply
-                        else:
-                            comment.reply(reply)
+            result = self.parser(comment)
+            if result:
+                if self._should_reply(comment):
+                    self._make_comment(comment, result)
+
+    def _make_comment(self, comment, result):
+        args = self._extract_args(comment, result)
+        reply = self.replier(*args)
+        if self.debug:
+            print(reply)
+        else:
+            comment.reply(reply)
+
+    def _extract_args(self, comment, result):
+        args = [comment]
+        try:
+            args.extend(result)
+        except TypeError:
+            pass
+        return args
+
+    def _should_reply(self, comment):
+        if comment.author.name.lower() in self.blacklist:
+            return False
+        replies = [x.author.name.lower() for x in comment.replies]
+        if self.user_name.lower() in replies:
+            return False
+        return True
 
     def _setup_blacklist(self):
         basepath = os.path.dirname(__file__)
         filepath = os.path.abspath(os.path.join(basepath, 'BLACKLIST.txt'))
-        blacklist = []
-        with open(filepath) as f:
-            for user in f:
-                blacklist.append(user.lower())
+        try:
+            blacklist = open(filepath).read().splitlines()
+        except FileNotFoundError:
+            blacklist = []
+        blacklist.append(self.user_name.lower())
         return blacklist
+
+    def _handle_exception(self, e):
+        traceback.print_exc()
+        print('Error: {}'.format(e))
+        sleep(self.rest_time)
+        self.start()
+        exit()
