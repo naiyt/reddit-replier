@@ -8,7 +8,6 @@ __version__ = '0.01'
 class Replier:
     def __init__(self,
                  parser,
-                 replier,
                  user_name,
                  user_pass,
                  subreddits='all',
@@ -16,7 +15,6 @@ class Replier:
                  limit=1000,
                  debug=False):
         self.parser = parser
-        self.replier = replier
         self.user_agent = user_agent
         self.subreddits = subreddits
         self.user_name = user_name
@@ -24,13 +22,17 @@ class Replier:
         self.limit = limit
         self.debug = debug
         self.r = praw.Reddit(self.user_agent)
-        self.r.login(self.user_name, self.user_pass)
-        self.blacklist = self._setup_blacklist()
+        self.blacklist = self._setup_blacklist('BLACKLIST.txt')
         self.rest_time = 3
+        self.comments_replied_to = 0
 
     def start(self):
+        self._login()
         comments = praw.helpers.comment_stream(self.r, self.subreddits, self.limit)
         return self._main_loop(comments)
+
+    def _login(self):
+        self.r.login(self.user_name, self.user_pass)
 
     def _main_loop(self, comments):
         while True:
@@ -41,26 +43,17 @@ class Replier:
         
     def _search_comments(self, comments):
         for comment in comments:
-            result = self.parser(comment)
-            if result:
+            reply, text = self.parser(comment)
+            if reply and text:
                 if self._should_reply(comment):
-                    self._make_comment(comment, result)
+                    self._make_comment(comment, text)
+                    self.comments_replied_to += 1
 
-    def _make_comment(self, comment, result):
-        args = self._extract_args(comment, result)
-        reply = self.replier(*args)
+    def _make_comment(self, comment, text):
         if self.debug:
-            print(reply)
+            print(text)
         else:
-            comment.reply(reply)
-
-    def _extract_args(self, comment, result):
-        args = [comment]
-        try:
-            args.extend(result)
-        except TypeError:
-            pass
-        return args
+            comment.reply(text)
 
     def _should_reply(self, comment):
         if comment.author.name.lower() in self.blacklist:
@@ -70,11 +63,13 @@ class Replier:
             return False
         return True
 
-    def _setup_blacklist(self):
+    def _setup_blacklist(self, f):
         basepath = os.path.dirname(__file__)
-        filepath = os.path.abspath(os.path.join(basepath, 'BLACKLIST.txt'))
+        filepath = os.path.abspath(os.path.join(basepath, f))
         try:
-            blacklist = open(filepath).read().splitlines()
+            f = open(filepath)
+            blacklist = f.read().splitlines()
+            f.close()
         except FileNotFoundError:
             blacklist = []
         blacklist.append(self.user_name.lower())
