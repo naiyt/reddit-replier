@@ -22,10 +22,11 @@ class AuthorMock:
 
 
 class CommentMock:
-    def __init__(self, author_name, replies=[], body='Reply to me'):
+    def __init__(self, author_name, replies=[], body='Reply to me', permalink='http://reddit.com/coolcomment'):
         self.author = AuthorMock(author_name)
         self.replies = [CommentMock(x, []) for x in replies]
         self.body = body
+        self.permalink = permalink
 
     def reply(self, message):
         return message

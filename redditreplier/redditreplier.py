@@ -1,4 +1,5 @@
 import praw
+import logging
 import os.path
 import traceback
 from time import sleep
@@ -14,6 +15,7 @@ class Replier:
                  user_agent='redditreplier v{} by /u/naiyt'.format(__version__),
                  limit=1000,
                  debug=False):
+        print("Setting things up...")
         self.parser = parser
         self.user_agent = user_agent
         self.subreddits = subreddits
@@ -27,7 +29,9 @@ class Replier:
         self.comments_replied_to = 0
 
     def start(self):
+        print("Logging into Reddit...")
         self._login()
+        print("Starting the comments stream...")
         comments = praw.helpers.comment_stream(self.r, self.subreddits, self.limit)
         return self._main_loop(comments)
 
@@ -54,6 +58,7 @@ class Replier:
             print(text)
         else:
             comment.reply(text)
+        print("Replied to {}'s comment at {}".format(comment.author.name, comment.permalink))
 
     def _should_reply(self, comment):
         if comment.author.name.lower() in self.blacklist:
@@ -77,7 +82,7 @@ class Replier:
 
     def _handle_exception(self, e):
         traceback.print_exc()
-        print('Error: {}'.format(e))
+        logging.warning("Something bad happened! I'm going to try to keep going, though. Error: {}".format(e))
         sleep(self.rest_time)
         self.start()
         exit()

@@ -107,7 +107,7 @@ Add users you never want to reply to to `BLACKLIST.txt`. The bot being run will 
 TODO
 ----
 
+* UPDATE DOCS!
 * Improve test coverage
 * Implement OAuth instead of plain text passwords?
-* Logging
-* Error handling
+* Better logging and error handling
