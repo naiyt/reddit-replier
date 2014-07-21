@@ -121,7 +121,7 @@ class TestShouldReply(unittest.TestCase):
                        TEST_LIMIT)
         self.bots_comment = CommentMock(TEST_USER, [])
         self.other_comment = CommentMock('Siegmeyer', ['Gwyn, Gwyndolin, Gwynevere'])
-        self.blacklist_comment = CommentMock('tweetposter', [])
+        self.blacklist_comment = CommentMock('test_user', [])
         self.already_replied = CommentMock('Solaire', [TEST_USER, 'Crestfallen', 'Andre'])
 
     def test_should_not_reply_to_self(self):
