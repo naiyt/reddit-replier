@@ -3,28 +3,22 @@ reddit-replier
 
 [![Build Status](https://travis-ci.org/naiyt/reddit-replier.svg?branch=master)](https://travis-ci.org/naiyt/reddit-replier)
 
-A simple Python module that simplifies creating Reddit bots that reply to comments based on specific criteria. 
+A simple Python module that simplifies creating Reddit bots that reply to comments based on criteria you specify.
 
-The `Replier` class takes a `parser` function and a `replier` function. The `parser` function is passed a `praw` formatted Reddit message and should return `True` or `False`.
-
-If your `parser` function returns `True` for that message, then your `Replier` object will reply to the specified message using your `replier` function, which should just return a string. (Your `replier` gets a copy of the message, so you can use it to format your response.)
+All you need to do is write a `parser` method that is passed into the `Replier` class that will parse a Reddit message that returns whether or not you should reply to said message as well as the text to reply with, and redditreplier will take care of the rest. It will communicate with the Reddit API using [praw](http://praw.readthedocs.org/en/v2.1.16/), continually watching whatever subreddits you specific.
 
 This is very much in beta and there are likely bugs.
 
 Replier Parameters
 ==================
-    class Replier(parser, replier, user_name, user_pass, subreddits='all', user_agent='redditreplier v0.01 by /u/naiyt', limit=1000, debug=False)
+    class Replier(parser, user_name, user_pass, subreddits='all', user_agent='redditreplier v0.01 by /u/naiyt', limit=1000, debug=False)
 
 Arguments
 ---------
 
     parser
 
-The `parser` should be a function that takes one argument (message) and returns `True` or `False`.
-
-    replier
-
-The `replier` should be a function that takes one argument (message) and returns a string that will be posted in reply to the message.
+The `parser` should be a function that takes one argument (message) and returns 2 values. The first should be `True` or `False` based on whether redditreplier should reply to that comment. The second value should be the text that you want redditreplier to reply with. (Feel free to leave this as an empty string if you are replying `False` for the first value.)
 
     user_name
 
@@ -44,11 +38,11 @@ The default user_agent should be okay, but I would prefer if you defined your ow
 
     limit
 
-The limit of posts to request at once. The Reddit API restricts you to at most 1000 per request. Less should be just fine if you are watching smaller subreddits.
+The limit of posts to request at once. The Reddit API restricts you to at most 1000 per request. Less should be just fine if you are watching smaller subreddits. praw ensures that you are staying with Reddit API limits, so you don't need to worry about that.
 
     debug
 
-Mainly used for tests.
+Prints the message being posted rather than actually posting it.
 
 Examples
 ========
@@ -57,21 +51,15 @@ Say I want to respond and thank anybody who says 'redditreplier is awesome!' on 
 
     def parser(message):
         if 'redditreplier is awesome' in message.body.lower():
-            return True
+            return True, 'Hey thanks! You are pretty cool yourself'
         else:
-            return False
-
-Then, create a replier with the message you want to send:
-
-    def replier(message):
-        return 'Hey, thanks {}! You are pretty swell yourself.'.format(message.author.name)
+            return False, ''
 
 Then create and run your Replier Bot:
 
     from redditreplier import Replier
     bot = Replier(
 		parser,
-		replier,
 		your_reddit_username,
 		your_reddit_pass,
 		'redditreplier' # The subreddit, leave blank for /r/all
@@ -79,15 +67,13 @@ Then create and run your Replier Bot:
     )
     bot.start()
 
-And there you go! It will start watching your subreddits and replying when needed. Run it with nohup or a screen session if you want it to be running continuously.
+And there you go! It will start watching your subreddits and replying when needed. Run it with nohup or a detached screen/tmux session if you want it to be running continuously.
 
 
 Running tests
 -------------
 
-You need to define the environment variables `user` and `password` for the Reddit logins. (Done this way to make it work with travis-ci). Try this:
-
-    python -c 'import os; os.environ["password"]=yourpass; os.environ["user"]=youruser; os.sytem("python tests/test.py")'
+`python tests.py`
 
 Installation
 ------------
@@ -102,12 +88,12 @@ You can post on [/r/redditreplier](http://reddit.com/r/redditreplier). (Although
 Blacklist
 ---------
 
-Add users you never want to reply to to `BLACKLIST.txt`. The bot being run will automatically be added to the blacklist (so that it won't get stuck in a loop with itself).
+Add users you never want to reply to to `BLACKLIST.txt`. The bot being run will automatically be added to the blacklist (so that it won't get stuck in a loop with itself). A bot will never reply to itself or reply to a comment it has already replied to. Sometimes bots can get stuck in loops with other bots, so if you see that happen make sure you add it to `BLACKLIST.txt`.
 
 TODO
 ----
 
-* UPDATE DOCS!
 * Improve test coverage
 * Implement OAuth instead of plain text passwords?
 * Better logging and error handling
+* Get on pip
