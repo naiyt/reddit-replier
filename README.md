@@ -9,6 +9,13 @@ All you need to do is write a `parser` method that is passed into the `Replier` 
 
 This is very much in beta and there are likely bugs.
 
+Installation
+------------
+
+    pip install redditreplier --pre
+
+Make sure to include the `--pre` as pip ignores 'pre-release' packages by default. Or just clone the repo.
+
 Replier Parameters
 ==================
     class Replier(parser, user_name, user_pass, subreddits='all', user_agent='redditreplier v0.01 by /u/naiyt', limit=1000, debug=False)
@@ -78,11 +85,6 @@ Running tests
 -------------
 
 `python tests.py`
-
-Installation
-------------
-
-Just clone the repo for now. Will get it on pip soon.
 
 Help
 ----

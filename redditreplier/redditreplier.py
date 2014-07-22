@@ -4,7 +4,7 @@ import os.path
 import traceback
 from time import sleep
 
-__version__ = '0.01'
+__version__ = '1.0.0a1'
 
 class Replier:
     def __init__(self,

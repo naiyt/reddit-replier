@@ -3,3 +3,7 @@ __pycache__
 secrets.py
 BLACKLIST.txt
 *.swp
+bin
+lib
+*egg*
+dist
