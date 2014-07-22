@@ -97,7 +97,7 @@ Add users you never want to reply to to `BLACKLIST.txt`. The bot being run will 
 Compatability
 ------------
 
-Currently only tested w/Python 3.4.0. (Hey, I'm trying to finally switch over to Python 3!) Should likely work with other versions of Python 3; adding Python 2 compatability should be pretty simple if somebody wants to do it.
+Currently only tested w/Python 3.3 and 3.4. (Hey, I'm trying to finally switch over to Python 3!) Adding Python 3.2 and Python 2 support should be pretty easy if someone wants to give it a try.
 
 TODO
 ----
