@@ -47,6 +47,10 @@ Prints the message being posted rather than actually posting it.
 Examples
 ========
 
+For a full fledged example, see [AutoGitHubBot](https://github.com/naiyt/autogithub).
+
+Simple example:
+
 Say I want to respond and thank anybody who says 'redditreplier is awesome!' on /r/redditreplier. First, I would write a `parser` method:
 
     def parser(message):
@@ -90,6 +94,11 @@ Blacklist
 
 Add users you never want to reply to to `BLACKLIST.txt`. The bot being run will automatically be added to the blacklist (so that it won't get stuck in a loop with itself). A bot will never reply to itself or reply to a comment it has already replied to. Sometimes bots can get stuck in loops with other bots, so if you see that happen make sure you add it to `BLACKLIST.txt`.
 
+Compatability
+------------
+
+Currently only tested w/Python 3.4.0. (Hey, I'm trying to finally switch over to Python 3!) Should likely work with other versions of Python 3; adding Python 2 compatability should be pretty simple if somebody wants to do it.
+
 TODO
 ----
 
@@ -97,3 +106,4 @@ TODO
 * Implement OAuth instead of plain text passwords?
 * Better logging and error handling
 * Get on pip
+* Port/test with other Python versions
