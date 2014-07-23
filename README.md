@@ -5,7 +5,7 @@ reddit-replier
 
 A simple Python module that simplifies creating Reddit bots that reply to comments based on criteria you specify.
 
-All you need to do is write a `parser` method that is passed into the `Replier` class that will parse a Reddit message that returns whether or not you should reply to said message as well as the text to reply with, and redditreplier will take care of the rest. It will communicate with the Reddit API using [praw](http://praw.readthedocs.org/en/v2.1.16/), continually watching whatever subreddits you specific.
+All you need to do is write a `Parser` class that is passed into the `Replier` class that will parse a Reddit message that returns whether or not you should reply to said message as well as the text to reply with, and redditreplier will take care of the rest. It will communicate with the Reddit API using [praw](http://praw.readthedocs.org/en/v2.1.16/), continually watching whatever subreddits you specific.
 
 This is very much in beta and there are likely bugs.
 
