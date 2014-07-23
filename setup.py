@@ -9,7 +9,7 @@ with open(path.join(here, 'DESCRIPTION.rst'), encoding='utf-8') as f:
 
 setup(
     name='redditreplier',
-    version='1.0.0a1',
+    version='1.0.0rc1',
     description='Create Reddit Bots',
     long_description=long_description,
     url='https://github.com/naiyt/reddit-replier',

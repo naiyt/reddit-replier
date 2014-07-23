@@ -47,8 +47,8 @@ class Replier:
         
     def _search_comments(self, comments):
         for comment in comments:
-            reply, text = self.parser(comment)
-            if reply and text:
+            should_reply, text = self.parser.parse(comment)
+            if should_reply and text:
                 if self._should_reply(comment):
                     self._make_comment(comment, text)
                     self.comments_replied_to += 1

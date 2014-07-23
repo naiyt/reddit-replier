@@ -25,7 +25,9 @@ Arguments
 
     parser
 
-The `parser` should be a function that takes one argument (message) and returns 2 values. The first should be `True` or `False` based on whether redditreplier should reply to that comment. The second value should be the text that you want redditreplier to reply with. (Feel free to leave this as an empty string if you are replying `False` for the first value.)
+The `parser` should be an object that takes no parameters. It must have a `parse` method that takes one argument (message) and returns 2 values. The first should be `True` or `False` based on whether redditreplier should reply to that comment. The second value should be the text that you want redditreplier to reply with. (Feel free to leave this as an empty string if you are replying `False` for the first value.)
+
+(`parser` used to be just a function, but defining it as a class gives you a lot more flexibility with doing what you want with your parsing.)
 
     user_name
 
@@ -58,19 +60,20 @@ For a full fledged example, see [AutoGitHubBot](https://github.com/naiyt/autogit
 
 Simple example:
 
-Say I want to respond and thank anybody who says 'redditreplier is awesome!' on /r/redditreplier. First, I would write a `parser` method:
+Say I want to respond and thank anybody who says 'redditreplier is awesome!' on /r/redditreplier. First, I would write a `parser` class:
 
-    def parser(message):
-        if 'redditreplier is awesome' in message.body.lower():
-            return True, 'Hey thanks! You are pretty cool yourself'
-        else:
-            return False, ''
+    class Parser:
+        def parse(self, message):
+            if 'redditreplier is awesome' in message.body.lower():
+                return True, 'Hey thanks! You are pretty cool yourself'
+            else:
+                return False, ''
 
 Then create and run your Replier Bot:
 
     from redditreplier import Replier
     bot = Replier(
-		parser,
+		Parser(),
 		your_reddit_username,
 		your_reddit_pass,
 		'redditreplier' # The subreddit, leave blank for /r/all

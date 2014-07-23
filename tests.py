@@ -9,11 +9,16 @@ TEST_USER_AGENT = 'My Reddit Replier Test'
 TEST_SUB = 'programming'
 TEST_LIMIT = 100
 
-def test_parser(comment):
-    if 'Reply to me' in comment.body:
-        return True, 'Praise the Sun!'
-    else:
-        return False, None
+
+class TestParser:
+    def __init__(self):
+        pass
+
+    def parse(self, comment):
+        if 'Reply to me' in comment.body:
+            return True, 'Praise the Sun!'
+        else:
+            return False, None
 
 
 class AuthorMock:
@@ -34,13 +39,12 @@ class CommentMock:
 
 class TestInit(unittest.TestCase):
     def setUp(self):
-        self.replier = Replier(test_parser,
+        self.replier = Replier(TestParser(),
                                TEST_USER, TEST_PASS,
                                TEST_SUB, TEST_USER_AGENT,
                                TEST_LIMIT)
 
     def test_init(self):
-        self.assertEqual(self.replier.parser, test_parser)
         self.assertEqual(self.replier.user_name, TEST_USER)
         self.assertEqual(self.replier.user_pass, TEST_PASS)
         self.assertEqual(self.replier.subreddits, TEST_SUB)
@@ -49,7 +53,7 @@ class TestInit(unittest.TestCase):
 
 class TestStart(unittest.TestCase):
     def setUp(self):
-        self.replier = Replier(test_parser,
+        self.replier = Replier(TestParser(),
                                TEST_USER, TEST_PASS,
                                TEST_SUB, TEST_USER_AGENT,
                                TEST_LIMIT)
@@ -73,7 +77,7 @@ class TestMainLoop(unittest.TestCase):
 
 class TestSearchComments(unittest.TestCase):
     def setUp(self):
-        self.replier = Replier(test_parser,
+        self.replier = Replier(TestParser(),
                        TEST_USER, TEST_PASS,
                        TEST_SUB, TEST_USER_AGENT,
                        TEST_LIMIT)
@@ -97,7 +101,7 @@ class TestSearchComments(unittest.TestCase):
 
 class TestMakeComment(unittest.TestCase):
     def setUp(self):
-        self.replier = Replier(test_parser,
+        self.replier = Replier(TestParser(),
                        TEST_USER, TEST_PASS,
                        TEST_SUB, TEST_USER_AGENT,
                        TEST_LIMIT)
@@ -116,7 +120,7 @@ class TestMakeComment(unittest.TestCase):
 
 class TestShouldReply(unittest.TestCase):
     def setUp(self):
-        self.replier = Replier(test_parser,
+        self.replier = Replier(TestParser(),
                        TEST_USER, TEST_PASS,
                        TEST_SUB, TEST_USER_AGENT,
                        TEST_LIMIT)
@@ -141,7 +145,7 @@ class TestShouldReply(unittest.TestCase):
 
 class TestSetupBlacklist(unittest.TestCase):
     def setUp(self):
-        self.replier = Replier(test_parser,
+        self.replier = Replier(TestParser(),
                                TEST_USER, TEST_PASS,
                                TEST_SUB, TEST_USER_AGENT,
                                TEST_LIMIT)
