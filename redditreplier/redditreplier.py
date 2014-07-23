@@ -73,7 +73,7 @@ class Replier:
         filepath = os.path.abspath(os.path.join(basepath, f))
         try:
             f = open(filepath)
-            blacklist = f.read().splitlines()
+            blacklist = [x.lower() for x in f.read().splitlines()]
             f.close()
         except FileNotFoundError:
             blacklist = []
