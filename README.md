@@ -70,7 +70,7 @@ Simple example:
 
 Say I want to respond and thank anybody who says 'redditreplier is awesome!' on /r/redditreplier. First, I would write a `parser` class:
 
-```
+```python
 class Parser:
     def parse(self, message):
         if 'redditreplier is awesome' in message.body.lower():
@@ -81,7 +81,7 @@ class Parser:
 
 Then create and run your Replier Bot:
 
-```
+```python
 from redditreplier import Replier
 bot = Replier(
 	Parser(),
