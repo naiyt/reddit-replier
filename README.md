@@ -16,9 +16,17 @@ Installation
 
 Make sure to include the `--pre` as pip ignores 'pre-release' packages by default. Or just clone the repo.
 
+Compatability
+------------
+
+Currently only tested w/Python 3.3 and 3.4. (Hey, I'm trying to finally switch over to Python 3!) Adding Python 3.2 and Python 2 support should be pretty easy if someone wants to give it a try.
+
+
 Replier Parameters
 ==================
-    class Replier(parser, user_name, user_pass, subreddits='all', user_agent='redditreplier v0.01 by /u/naiyt', limit=1000, debug=False)
+```python
+class Replier(parser, user_name, user_pass, subreddits='all', user_agent='redditreplier v0.01 by /u/naiyt', limit=1000, debug=False)
+```
 
 Arguments
 ---------
@@ -62,27 +70,32 @@ Simple example:
 
 Say I want to respond and thank anybody who says 'redditreplier is awesome!' on /r/redditreplier. First, I would write a `parser` class:
 
-    class Parser:
-        def parse(self, message):
-            if 'redditreplier is awesome' in message.body.lower():
-                return True, 'Hey thanks! You are pretty cool yourself'
-            else:
-                return False, ''
+```
+class Parser:
+    def parse(self, message):
+        if 'redditreplier is awesome' in message.body.lower():
+            return True, 'Hey thanks! You are pretty cool yourself'
+        else:
+            return False, ''
+```
 
 Then create and run your Replier Bot:
 
-    from redditreplier import Replier
-    bot = Replier(
-		Parser(),
-		your_reddit_username,
-		your_reddit_pass,
-		'redditreplier' # The subreddit, leave blank for /r/all
-		user_agent='My cool bot by /u/username'
-    )
-    bot.start()
+```
+from redditreplier import Replier
+bot = Replier(
+	Parser(),
+	your_reddit_username,
+	your_reddit_pass,
+	'redditreplier' # The subreddit, leave blank for /r/all
+	user_agent='My cool bot by /u/username'
+)
+bot.start()
+```
 
 And there you go! It will start watching your subreddits and replying when needed. Run it with nohup or a detached screen/tmux session if you want it to be running continuously.
 
+Please not that this is a bad example, and not something that you should create a bot to do. Try to come up with more interesting and useful bots than that.
 
 Running tests
 -------------
@@ -98,11 +111,6 @@ Blacklist
 ---------
 
 Add users you never want to reply to to `BLACKLIST.txt`. The bot being run will automatically be added to the blacklist (so that it won't get stuck in a loop with itself). A bot will never reply to itself or reply to a comment it has already replied to. Sometimes bots can get stuck in loops with other bots, so if you see that happen make sure you add it to `BLACKLIST.txt`.
-
-Compatability
-------------
-
-Currently only tested w/Python 3.3 and 3.4. (Hey, I'm trying to finally switch over to Python 3!) Adding Python 3.2 and Python 2 support should be pretty easy if someone wants to give it a try.
 
 TODO
 ----
