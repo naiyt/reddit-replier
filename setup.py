@@ -8,9 +8,13 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'DESCRIPTION.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
+required = ['praw']
+if sys.version_info <= (3,2):
+    required.append('mock')
+
 setup(
     name='redditreplier',
-    version='1.0.0rc1',
+    version='1.0.1rc1',
     description='Create Reddit Bots',
     long_description=long_description,
     url='https://github.com/naiyt/reddit-replier',
@@ -29,7 +33,5 @@ setup(
     ],
     keywords='reddit bots automation praw',
     packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
-    install_requires=['praw']
-    if sys.version_info <= (3,2):
-        install_requires = "mock"
+    install_requires=required
 )
