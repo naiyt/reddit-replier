@@ -19,7 +19,7 @@ Make sure to include the `--pre` as pip ignores 'pre-release' packages by defaul
 Compatability
 ------------
 
-Currently only tested w/Python 3.3 and 3.4. (Hey, I'm trying to finally switch over to Python 3!) Adding Python 3.2 and Python 2 support should be pretty easy if someone wants to give it a try.
+Currently tested w/Python 3.2, 3.3 and 3.4. (Hey, I'm trying to finally switch over to Python 3!) Adding Python 2 support should be pretty easy if someone wants to give it a try.
 
 
 Replier Parameters
@@ -118,5 +118,5 @@ TODO
 * Improve test coverage
 * Implement OAuth instead of plain text passwords?
 * Better logging and error handling
-* Get on pip
 * Port/test with other Python versions
+* Support for other types of bots

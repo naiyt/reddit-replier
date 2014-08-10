@@ -1,7 +1,13 @@
 import unittest
-from unittest import mock
 from redditreplier import Replier
 import praw
+
+try:
+    from unittest import mock
+except ImportError:
+    '''Python 3.2 support'''
+    import mock
+
 
 TEST_USER = 'test_user'
 TEST_PASS = 'test_pass'

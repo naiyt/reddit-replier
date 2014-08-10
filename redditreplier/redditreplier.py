@@ -75,7 +75,7 @@ class Replier:
             f = open(filepath)
             blacklist = [x.lower() for x in f.read().splitlines()]
             f.close()
-        except FileNotFoundError:
+        except (OSError, IOError) as e:
             blacklist = []
         blacklist.append(self.user_name.lower())
         return blacklist
