@@ -23,7 +23,7 @@ class Replier:
         self.user_pass = user_pass
         self.limit = limit
         self.debug = debug
-        self.r = praw.Reddit(self.user_agent)
+        self.r = praw.Reddit(user_agent=self.user_agent)
         self.blacklist = self._setup_blacklist('BLACKLIST.txt')
         self.rest_time = 3
         self.comments_replied_to = 0
