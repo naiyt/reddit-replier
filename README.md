@@ -1,3 +1,7 @@
+# NOTE: This repository has not been updated in 7+ years, and is currently *archived*!
+
+It was something I messed around with ages ago, but I haven't looked at it or played with it since. I wouldn't recommend trying to use it.
+
 reddit-replier
 ==============
 
